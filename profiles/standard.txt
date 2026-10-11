@@ -1,0 +1,20 @@
+# Dataref bawaan X-Plane, berlaku untuk semua pesawat
+ias_kt        sim/flightmodel/position/indicated_airspeed
+alt_msl_m     sim/flightmodel/position/elevation
+alt_agl_m     sim/flightmodel/position/y_agl
+vs_ms         sim/flightmodel/position/vh_ind
+pitch_deg     sim/flightmodel/position/theta
+roll_deg      sim/flightmodel/position/phi
+heading_deg   sim/flightmodel/position/psi
+on_ground     sim/flightmodel/failures/onground_any
+# --- input pilot ---
+yoke_pitch    sim/joystick/yoke_pitch_ratio
+yoke_roll     sim/joystick/yoke_roll_ratio
+yoke_yaw      sim/joystick/yoke_heading_ratio
+flaps         sim/cockpit2/controls/flap_ratio
+gear_handle   sim/cockpit/switches/gear_handle_status
+speedbrake    sim/cockpit2/controls/speedbrake_ratio
+thr1          sim/flightmodel/engine/ENGN_thro[0]
+thr2          sim/flightmodel/engine/ENGN_thro[1]
+n1_1          sim/flightmodel/engine/ENGN_N1_[0]
+n1_2          sim/flightmodel/engine/ENGN_N1_[1]

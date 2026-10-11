@@ -1,0 +1,16 @@
+# Profil Zibo 737 (ICAO B738).
+# PENTING: nama dataref Zibo di bawah ini belum diverifikasi.
+# Plugin otomatis melewati yang tidak ada dan mencatatnya di Log.txt X-Plane
+# (cari "[AICopilot] Dataref TIDAK ADA"). Cek nama yang benar pakai DataRefTool.
+autopilot_cmd_a     laminar/B738/autopilot/cmd_a_status
+autopilot_lnav      laminar/B738/autopilot/lnav_status
+autopilot_vnav      laminar/B738/autopilot/vnav_status1
+autopilot_lvl_chg   laminar/B738/autopilot/lvl_chg_status
+autopilot_hdg_sel   laminar/B738/autopilot/hdg_sel_status
+autopilot_alt_hld   laminar/B738/autopilot/alt_hld_status
+autopilot_vs        laminar/B738/autopilot/vs_status
+mcp_speed           laminar/B738/autopilot/mcp_speed_dial_kts_mach
+mcp_heading         laminar/B738/autopilot/mcp_hdg_dial
+mcp_altitude        laminar/B738/autopilot/mcp_alt_dial
+autobrake           laminar/B738/autobrake/autobrake_pos
+speedbrake_lever    laminar/B738/flt_ctrls/speedbrake_lever
