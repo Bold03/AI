@@ -1,0 +1,73 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # Kalau link ini mati, download SDK manual dari developer.x-plane.com,
+  # taruh isinya di sdk/SDK di repo, lalu hapus step "Download X-Plane SDK".
+  SDK_URL: https://developer.x-plane.com/wp-content/plugins/code-sample-generation/sdk_zip_files/XPSDK411.zip
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            dir: win_x64
+            cmake_args: -A x64
+          - os: ubuntu-latest
+            dir: lin_x64
+            cmake_args: ""
+          - os: macos-latest
+            dir: mac_x64
+            cmake_args: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download X-Plane SDK
+        shell: bash
+        run: |
+          curl -fL -o sdk.zip "$SDK_URL"
+          python -m zipfile -e sdk.zip sdk_tmp
+          root=$(dirname "$(find sdk_tmp -type d -name CHeaders | head -n1)")
+          mkdir -p sdk
+          cp -r "$root" sdk/SDK
+
+      - name: Configure
+        shell: bash
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_args }}
+
+      - name: Build
+        shell: bash
+        run: cmake --build build --config Release
+
+      - name: Package
+        shell: bash
+        run: |
+          mkdir -p pkg/AICopilotLogger/${{ matrix.dir }}
+          cp "$(find build -name '*.xpl' | head -n1)" pkg/AICopilotLogger/${{ matrix.dir }}/
+          cp -r profiles pkg/AICopilotLogger/profiles
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-${{ matrix.dir }}
+          path: pkg
+
+  combine:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pkg-*
+          merge-multiple: true
+          path: pkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AICopilotLogger-semua-platform
+          path: pkg
